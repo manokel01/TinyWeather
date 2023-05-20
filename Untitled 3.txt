@@ -1,0 +1,25 @@
+const {InfluxDB, Point} = require('@influxdata/influxdb-client')
+
+// database configuration
+const token = process.env.INFLUXDB_TOKEN
+const url = 'https://eu-central-1-1.aws.cloud2.influxdata.com'
+let org = `dev`
+let bucket = `_monitoring`
+// create database instance
+const client = new InfluxDB({url, token})
+
+let writeClient = client.getWriteApi(org, bucket, 'ns')
+
+for (let i = 0; i < 5; i++) {
+  let point = new Point('measurement1')
+    .tag('tagname1', 'tagvalue1')
+    .intField('field1', i)
+
+  void setTimeout(() => {
+    writeClient.writePoint(point)
+  }, i * 1000) // separate points by 1 second
+
+  void setTimeout(() => {
+    writeClient.flush()
+  }, 5000)
+}
