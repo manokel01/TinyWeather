@@ -1,1 +1,3 @@
-### Node.js backend
+# Node.js backend
+
+Node.js server for reading weather data from an Arduino Nano Sense and storing it in an InfluxDB database. The server establishes a serial port connection, parses JSON data received from the Arduino, and saves it in the InfluxDB database for further analysis and visualization. This server provides the backend functionality required to collect and store real-time weather data for forecasting and historical analysis purposes. It also allows to manage a MongoDb database with the available microcontrollers and it's owners.
