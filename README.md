@@ -1,8 +1,11 @@
-# Project Brief: Weather Prediction and Logging on Microcontroller (full-stack)
+# TinyWeather: Weather prediction on a microcontroller and databse management system
+
+(Work in progress)
 
 ## Overview:
-The aim is to create a fully functional full-stack data logging and weather prediction system. The system includes implementing tinyML (Tiny Machine Learning)[https://www.datacamp.com/blog/what-is-tinyml-tiny-machine-learning] on Arduino microcrontrollers, storing the weather data in a Reat-Time database (Firebase) as well as a MongoDB frontend and backend to manage the microcontrollers and their owners. An one-page Angular app provides a user-friendly interface to display real-time weather data, historical data and predictions.
+The aim is to create a fully functional full-stack data logging and weather prediction system. The system includes implementing tinyML (Tiny Machine Learning)[https://www.datacamp.com/blog/what-is-tinyml-tiny-machine-learning] on Arduino microcrontrollers, storing the weather data in a time-series databse (influxDB) as well as a MongoDB frontend and backend to manage the microcontrollers and their owners. An one-page Angular app provides a user-friendly interface to display real-time weather data, historical data and predictions.
 
+![Dataflow diagram](./static-files/data-flow-diagram.png)
 ## Key Features:
 
 1. Full-Stack Application:
@@ -14,7 +17,7 @@ The aim is to create a fully functional full-stack data logging and weather pred
 3. Serial/BLE Connection with Data Visualization:
    - Establish a serial or Bluetooth Low Energy (BLE) connection between the microcontrollers and the data visualization platform.
    - Develop a data visualization component to display real-time sensor data, enabling users to monitor weather conditions visually.
-4. Time-series Database (influxDV):
+4. Time-series Database (influxDB):
    - Utilize influxDV as a time-series database to store and access weather data captured by the microcontrollers.
    - Implement real-time updates to enable users to monitor and analyze the latest weather information without delay.
 5. One-Page Angular App:
