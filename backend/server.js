@@ -1,8 +1,13 @@
-import * as fs from 'fs';
-import { handleSerialData } from './config/serial.js'
+import { handleSerialData } from './middleware/parser.js';
 
-// Create a writable stream to JSON file
-const outputStream = fs.createWriteStream('serialdata.json', {flags: 'a'});
+// Parse incoming data
+handleSerialData();
 
-// handle the incmoing serial data
-handleSerialData(outputStream);
+// Create influxDB connection
+
+
+// Store incoming data to time-series database
+
+//
+
+

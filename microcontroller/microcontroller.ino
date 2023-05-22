@@ -31,8 +31,8 @@
 #define NUMBER_OF_INPUTS 3
 #define NUMBER_OF_OUTPUTS 5
 #define TENSOR_ARENA_SIZE 4*1024
-#define LOCATION_ID 14320000
-#define VENDOR_ID 2341
+#define LOCATION_ID "14320000"
+#define VENDOR_ID "2341"
 #define PRODUCT_ID "805a"
 
 StaticJsonDocument<256> doc;

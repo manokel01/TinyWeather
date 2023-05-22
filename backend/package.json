@@ -41,6 +41,7 @@
   "author": "Manolis Kelaidis",
   "license": "MIT",
   "dependencies": {
+    "@influxdata/influxdb-client": "^1.33.2",
     "influx": "^5.9.3",
     "serialport": "^11.0.0"
   }
