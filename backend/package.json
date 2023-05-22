@@ -2,7 +2,7 @@
   "name": "tinyweather-server",
   "version": "1.0.0",
   "description": "Node.js server for reading weather data from an Arduino Nano Sense and storing it in an InfluxDB database. The server establishes a serial port connection, parses JSON data received from the Arduino, and saves it in the InfluxDB database for further analysis and visualization. This server provides the backend functionality required to collect and store real-time weather data for forecasting and historical analysis purposes. It also allows to manage a MongoDb database with the available microcontrollers and it's owners.",
-  "main": "server.js",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -42,6 +42,7 @@
   "license": "MIT",
   "dependencies": {
     "@influxdata/influxdb-client": "^1.33.2",
+    "express": "^4.18.2",
     "influx": "^5.9.3",
     "serialport": "^11.0.0"
   }
