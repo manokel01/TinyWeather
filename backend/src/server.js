@@ -1,4 +1,4 @@
-import { handleSerialData } from './middleware/parser.js';
+import { handleSerialData } from '../middleware/parser.js';
 
 // Parse incoming data
 handleSerialData();
