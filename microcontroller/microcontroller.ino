@@ -27,13 +27,19 @@
 #include <Array.h>
 #include "model.h"
 #include <ArduinoJson.h>
+#include <TimeLib.h>
 
 #define NUMBER_OF_INPUTS 3
 #define NUMBER_OF_OUTPUTS 5
 #define TENSOR_ARENA_SIZE 4*1024
-#define LOCATION_ID "14320000"
-#define VENDOR_ID "2341"
-#define PRODUCT_ID "805a"
+#define UUID "8c21f098-87a9-4dca-bf38-93a14d7fa5bf" // the generated UUID for this device
+#define LOCATION_X 35.377192 // dummy decimal coordinate
+#define LOCATION_Y 24.211324 // dummy decimal coordinate
+#define BATTERY 72 // dummy battery indication
+#define TIME_HEADER "T"     // Header tag for serial time sync message
+#define TIME_REQUEST 7      // ASCII bell character requests a time sync message
+
+char timestampString[25];   // timestamp - big enough for your longest string, including a null terminator
 
 StaticJsonDocument<256> doc;
 
@@ -41,6 +47,10 @@ Eloquent::TinyML::TensorFlow::TensorFlow<NUMBER_OF_INPUTS, NUMBER_OF_OUTPUTS, TE
 
 void setup() {
   Serial.begin(115200);
+
+  // Sync device manually with current ISO time - enter Current Epoch Unix Timestamp in terminal.
+  setSyncProvider(requestSync);  //set function to call when sync required
+  Serial.println("To sync device send 'T + Current Epoch Unix Timestamp'");
 
   Serial.println("Communication started");
   if (!HS300x.begin()) {
@@ -55,6 +65,8 @@ void setup() {
 }
 
 void loop() {
+
+  // ,easure sensor data
   float temperature = HS300x.readTemperature();
   float humidity = HS300x.readHumidity();
   float pressure = BARO.readPressure() * 10;
@@ -62,6 +74,14 @@ void loop() {
   float input[NUMBER_OF_INPUTS] = {temperature, humidity, pressure};
   float output[NUMBER_OF_OUTPUTS] = {0, 0, 0, 0, 0};
   ml.predict(input, output);
+
+  if (Serial.available()) {
+    processSyncMessage();
+  }
+  if (timeStatus() != timeNotSet) {
+    // timestamp as ISO 8601 string date format
+    snprintf(timestampString, sizeof(timestampString), "%4d-%02d-%02dT%02d:%02d:%02d+0200", year(), month(), day(), hour(), minute(), second());
+  }
 
   // Serial.print("Temperature : ");
   // Serial.print(temperature);
@@ -78,9 +98,12 @@ void loop() {
   root["humidity"] = humidity;
   root["pressure"] = pressure;
   root["weatherDesc"] = value(output);
-  root["locationID"] = LOCATION_ID;
-  root["vendorID"] = VENDOR_ID;
-  root["productID"] = PRODUCT_ID;
+  root["sensorId"] = UUID;
+  JsonArray location = doc.createNestedArray("location");
+  location.add(LOCATION_X);
+  location.add(LOCATION_Y);
+  root["battery"] = BATTERY;
+  root["timestamp"] =timestampString;
   serializeJson(root, Serial);
   Serial.println();
 
@@ -100,4 +123,21 @@ String value(float out[5]) {
   } else {
     return "Freezing rain / snow";
   }
+}
+
+// set the time utility function
+void processSyncMessage() {
+  unsigned long pctime;
+  const unsigned long DEFAULT_TIME = 1357041600;  // Jan 1 2013
+  if (Serial.find(TIME_HEADER)) {
+    pctime = Serial.parseInt();
+    if (pctime >= DEFAULT_TIME) {  // check the integer is a valid time (greater than Jan 1 2013)
+      setTime(pctime);             // Sync Arduino clock to the time received on the serial port
+    }
+  }
+}
+
+time_t requestSync() {
+  Serial.write(TIME_REQUEST);
+  return 0;  // the time will be sent later in response to serial mesg
 }

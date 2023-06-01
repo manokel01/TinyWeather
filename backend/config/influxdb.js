@@ -1,12 +1,61 @@
-import {InfluxDB} from '@influxdata/influxdb-client';
+import { InfluxDB, Point } from '@influxdata/influxdb-client';
+import dotenv from 'dotenv';
+import { Weather } from '../models/weatherModel.js';
 
-// Configure InfluxDB connection
-const token = process.env.INFLUXDB_TOKEN;
-const url = 'https://eu-central-1-1.aws.cloud2.influxdata.com';
-const org = 'dev';
-const bucket = 'TinyWeather';
+dotenv.config();
 
-const client = new InfluxDB({ url, token });
-const writeClient = client.getWriteApi(org, bucket, 'ns');
+const token = '8HFzehdPpMker-DmVNI5hsl2Q7SrJk5R1_VNjhT5OJ-xurlcLIL9AROyGBmbufTy0zMOrObrbGsxljUhi1JQHg==';
+const url = process.env.INFLUXDB_URL;
+const org = process.env.INFLUXDB_ORG;
+const bucket = process.env.INFLUXDB_BUCKET;
 
-export { writeClient }
+// Initialize a new InfluxDB client instance
+const influxClient = new InfluxDB({ url, token });
+
+// Initialize a write API instance for the given organization and bucket
+const writeApi = influxClient.getWriteApi(org, bucket, 'ns');
+
+// Initialize a query API instance for the given organization
+const queryApi = influxClient.getQueryApi(org);
+
+// A method to create influxdb point from Weather class
+/**
+ * Initialize a new Weather instance.
+ * @constructor
+ * @param {Object} [weatherData] - Optional initial weather data.
+ * @param {number} [weatherData.temperature] - The temperature in degrees Celsius.
+ * @param {number} [weatherData.humidity] - The relative humidity as a percentage.
+ * @param {number} [weatherData.pressure] - The atmospheric pressure in millibars.
+ * @param {string} [weatherData.weatherDesc] - A description of the current weather conditions.
+ * @param {string} [weatherData.sensorId] - TheUUID  identifier of the sensor that collected the data.
+ * @param {number} [weatherData.location[0]] - The x-coordinate where the data was collected.
+ * @param {number} [weatherData.location[1]] - The y-coordinate where the data was collected.
+ * @param {number} [weatherData.battery] - The battery level as a percentage.
+ * @param {string} [weatherData.timestamp] - The timestamp of the data as a Unix timestamp in milliseconds.
+ */
+const weather = new Weather();
+
+/**
+ * Create an InfluxDB point from a Weather instance.
+ * @param {Weather} weather - The Weather instance to create a point from.
+ * @returns {Point} The created InfluxDB point.
+ */
+const weatherPoint = (weather) => {
+    const point = new Point('weather-data')
+    .tag('crop', 'grapes')
+    .tag('farm_code', 'SAM2')
+    .floatField('temperature', weather.temperature)
+    .floatField('humidity', weather.humidity)
+    .floatField('pressure', weather.pressure)
+    .stringField('weatherDesc', weather.weatherDesc)
+    .stringField('sensorId', weather.sensorId)
+    .floatField('location_x', weather.location[0])
+    .floatField('location_y', weather.location[1])
+    .floatField('battery', weather.battery)
+    .stringField('timestamp', weather.timestamp);
+
+    return point;
+}
+
+// Export the query API, write API, and weather point functions for use in other modules
+export { queryApi, writeApi, weatherPoint };
