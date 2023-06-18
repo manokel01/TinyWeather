@@ -1,11 +1,11 @@
-# tinyMeteo: A Weather Prediction Project using TinyML and Python
+# TinyWeather Weather Prediction using TinyML and Python
 
 ## Project Overview
 
 TinyMeteo is a machine learning project that uses Tiny Machine Learning (TinyML) and Python to predict weather conditions based on temperature, humidity, and pressure data. The project utilizes an Arduino Nano 33 Sense board to collect environmental data, which is then processed and fed into a machine learning model to predict the weather conditions.
 
 ## Data Details
-The dataset for this project is obtained from [World Weather Online](https://www.worldweatheronline.com) in JSON-formt and contains environmental data such as temperature, humidity, pressure and weather description.
+The training dataset for this project is obtained from [World Weather Online](https://www.worldweatheronline.com) in JSON-formt and contains environmental data such as temperature, humidity, pressure and weather description.
 - API Endpoint: https://api.worldweatheronline.com/premium/v1/past-weather.ashx
 - API Documentation: https://www.worldweatheronline.com/weather-api/api/docs/historical-weather-api.aspx#qparameter 
 

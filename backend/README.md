@@ -1,23 +1,24 @@
 # TinyWeather : Backend
 
-Welcome to the TinyWeather backend! This is the server-side component of the TinyWeather platform, which allows growers to monitor weather conditions on their farms.
-
 ## Overview
 
-The TinyWeather backend is built using Python, InfluxDB, Grafana, and Swagger. It provides a RESTful API for collecting and analyzing weather data from a network of sensors located on farms and vineyards. The backend stores the weather data in a time-series database (InfluxDB) and provides a visualization of the data using Grafana.
+This is the server-side component of the TinyWeather platform. It provides an interface to Serial Port for connecting microcntrollers, parses serialized incoming data, stores them in a time-series InfluxDB database as well as provide a RESTful API to visualize and monitor weather data, sensors, farms and growers on a MongoDB database. 
+## Swagger Documentation
+
+TinyWeather's API is documented using Swagger. The documentation is available online at [https//localhost:3000/api-docs](https//localhost:3000/api-docs). The documentation provides detailed information about each API endpoint, including request and response formats, authentication requirements, and sample requests and responses.
 
 ## Technologies Used
 
 TinyWeather is built using the following technologies:
-
+- Node.js / Express: a webserver that provides the REST endpoints.
+- MongoDB: a no-SQL database
 - InfluxDB: a high-performance distributed time-series database
-- Grafana: a popular open-source platform for analytics and visualization
 - Swagger: a tool for designing, building, and documenting RESTful APIs
-- Python: a popular programming language used for data analysis and web development
 
 ## Data Models
+Although the entities are stored in a no-SQL database, there is programmed relation between them, with the use of ObjectId as foreign keys.
 
-The TinyWeather backend uses the following data models:
+![data-model](../static-files/tinyweather-ERD.png)
 
 - Grower: contains information about the grower, including name, contact details, and address.
 - Farm: contains information about the farm, including location, crops grown, and a reference to the grower who owns the farm.
@@ -28,17 +29,30 @@ These data models are related to each other as follows:
 
 - A grower can have multiple farms.
 - A farm can have multiple sensors.
-- A sensor can report weather data to multiple farms.
+- A sensor can report many datasetss.
 
-For more detailed information, refer to the data models in `database.md`.
+## Getting Started
 
+This guide assumes you have an account with InfluxDB and MongoDB databases and set up any data models necessary. 
 
-## Dependencies
+To get started with TinyWeather, you'll need to set up a few things:
+Download 
 
-TinyWeather backend has the following dependencies:
+### Download
 
-## Dependencies
+To download TinyWeather from GitHub, follow these steps:
 
+1. Go to the TinyWeather repository on GitHub: [https://github.com/manokel01/TinyWeather](https://github.com/manokel01/TinyWeather)
+2. Click on the "Code" button and select "Download ZIP"
+3. Extract the ZIP file to a directory on your computer
+
+### Install Dependencies
+
+Browse to `backend` directory and install the dependencies required to run TinyWeather by running in the terminal:
+
+```
+npm install
+```
 TinyWeather backend has the following dependencies:
 
 - @influxdata/influxdb-client: ^1.33.2
@@ -61,50 +75,18 @@ TinyWeather backend has the following dependencies:
 - swagger-ui-express: ^4.6.3
 - uuid: ^9.0.0
 
-## Documentation
+### Serial Data Collection
 
-TinyWeather's API is documented using Swagger. The documentation is available online at [https//localhost:3000/api-docs](https//localhost:3000/api-docs). The documentation provides detailed information about each API endpoint, including request and response formats, authentication requirements, and sample requests and responses.
-
-## Getting Started
-
-To get started with TinyWeather, you'll need to set up a few things:
-
-### Software
-
-TinyWeather uses InfluxDB and Grafana to collect, store, and analyze weather data. You'll need to set up a new InfluxDB instance and Grafana instance to use with TinyWeather.
-
-You'll also need to install the TinyWeather client libraries on your sensor units. The client libraries are available for a variety of programming languages, including Python, JavaScript, and Go.
-
-### Configuration
-
-Once you have your hardware and software set up, you'll need to configure your sensors to connect to your InfluxDB instance. This can be done using the TinyWeather client libraries.
-
-### Download
-
-To download TinyWeather from GitHub, follow these steps:
-
-1. Go to the TinyWeather repository on GitHub: [https://github.com/username/TinyWeather](https://github.com/username/TinyWeather)
-2. Click on the "Code" button and select "Download ZIP"
-3. Extract the ZIP file to a directory on your computer
-
-### Install Dependencies
-
-To install the dependencies required to run TinyWeather:
-
-```
-npm install
-```
+To open Serial Port and start collecting data from the arduino browse to `serial.js` file in the `config` directory and edit the serial port parameters to your needs. Then uncomment the relevant snippet in the `server.js` file.
 
 ### Run
 
-To run TinyWeather, follow these steps:
+To run TinyWeather erver, follow these steps:
 
-1. Open a terminal or command prompt and navigate to the directory where you extracted the TinyWeather ZIP file
-2. Start the TinyWeather server: `python app.py`
-3. Open a web browser and navigate to [http://localhost:5000](http://localhost:5000) to access the TinyWeather web interface
-
-## Usage
-
-With TinyWeather set up and configured, you can start collecting weather data and analyzing it using the Grafana dashboard. The dashboard provides a variety of widgets and tools for visualizing weather trends and patterns, including temperature, humidity, pressure, and more.
+1. Open terminal and run:
+   ```
+   node server
+   ```
+2. Open a web browser and navigate to [http://localhost:3000/api-docs](http://localhost:3000/api-docs) to access the Swagger TinyWeather web interface
 
 

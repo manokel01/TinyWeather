@@ -20,9 +20,9 @@ const swaggerOptions = {
     info: {
       title: 'TinyWeather API', // The title of the API
       version: '1.0.0', // The version of the API
-      description: 'A farm management and weather monitoring system.', // The description of the API
+      description: 'A farm management and weather monitoring system. For more info visit https://github.com/manokel01/TinyWeather', // The description of the API
       contact: {
-        email: 'manokel@gmail.com' // The email of the API contact person
+        email: 'manokel@gmail.com', // The email of the API contact person
       },
       license: {
         name: 'Licence: MIT', // The name of the license

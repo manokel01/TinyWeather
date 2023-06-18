@@ -40,7 +40,7 @@ The installation assumes you have already downloaded the server of TinyWeather a
 
 1. Clone the repository from GitHub:
 ```
-git clone https://github.com/example/tinyweathr-frontend.git
+git clone https://github.com/manokel01/tinyweather-frontend.git
 ```
 2. Install the required dependencies:
 ```
