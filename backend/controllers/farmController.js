@@ -1,5 +1,6 @@
 import express from 'express';
 import { Farm } from "../models/farmModel.js";
+import { Grower } from "../models/growerModel.js";
 const { Response } = express;
 
 /**
@@ -110,3 +111,26 @@ export const remove = async (req, res) => {
         res.status(400).json({ status: false, data: err });
     }
 }
+
+/**
+ * Returns a list with all the farms of a single grower based on his username.
+ * @param {Request} req - Express request object
+ * @param {Response} res - Express response object
+ */
+// Returns a list of all farms of a single grower based on his username
+export const getFarmsByGrowerUsername = async (req, res) => {
+    try {
+      // Find the grower with the specified username
+      const grower = await Grower.findOne({ username: req.params.username });
+  
+      if (!grower) {
+        return res.status(404).json({ error: 'Grower not found' });
+      }
+  
+      // Find all farms associated with the grower
+      const farms = await Farm.find({ grower: grower._id });
+      res.status(200).json({ status: true, data: farms });
+    } catch (err) {
+      res.status(500).json({ status: false, data: err });
+    }
+  };

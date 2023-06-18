@@ -1,5 +1,6 @@
 import express from 'express';
 import { Sensor } from '../models/sensorModel.js';
+import { Farm } from '../models/farmModel.js';
 const { Response } = express;
 /**
  * Find all sensors
@@ -91,5 +92,28 @@ export const remove = async (req, res) => {
     res.status(200).json({ status: true, data: result });
   } catch (err) {
     res.status(400).json({ status: false, data: err });
+  }
+};
+
+/**
+ * Returns a list with all the sensors of a single farm based on farm's code.
+ * @param {Request} req - Express request object
+ * @param {Response} res - Express response object
+ */
+export const getSensorsByFarmCode = async (req, res) => {
+  try {
+    // Find the farm with the specified farm code.
+    const farm = await Farm.findOne({ farm_code: req.params.farm_code });
+
+    if (!farm) {
+      return res.status(404).json({ error: 'Farm not found' });
+    }
+
+    // Find all sensors associated with the farm
+    const sensors = await Sensor.find({ farm: farm._id });
+    
+    res.status(200).json({ status: true, data: sensors });
+  } catch (err) {
+    res.status(500).json({ status: false, data: err });
   }
 };

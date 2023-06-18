@@ -1,5 +1,5 @@
 import express from 'express';
-import { findAll, findOne, create, update, remove } from '../controllers/sensorController.js';
+import { findAll, findOne, create, update, remove, getSensorsByFarmCode } from '../controllers/sensorController.js';
 
 const router = express.Router();
 
@@ -214,5 +214,41 @@ router.patch('/update/:uuid', update);
  *                   status: Error in deleting the sensor.
  */
 router.delete('/delete/:uuid', remove);
+
+/**
+ * @swagger
+ * /api/sensors/farm/{farm_code}/:
+ *   get:
+ *     summary: Get farms' sensors.
+ *     description: Get a list of a farm's sensorss based on their farm code.
+ *     tags: [Farms, Sensors]
+ *     parameters:
+ *       - in: path
+ *         name: farm_code
+ *         required: true
+ *         description: The code of the farm to search sensors for.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the farms's sensors.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Sensor'
+ *       400:
+ *         description: Invalid request or error in retrieving the farms's sensors.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 data:
+ *                   type: string
+ *                   status: Error in retrieving the farms's sensors.
+ */
+router.get('/farm/:farm_code/', getSensorsByFarmCode);
 
 export { router };

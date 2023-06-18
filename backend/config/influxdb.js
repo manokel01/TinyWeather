@@ -4,7 +4,7 @@ import { Weather } from '../models/weatherModel.js';
 
 dotenv.config();
 
-const token = '8HFzehdPpMker-DmVNI5hsl2Q7SrJk5R1_VNjhT5OJ-xurlcLIL9AROyGBmbufTy0zMOrObrbGsxljUhi1JQHg==';
+const token = "IaRU742giMEszueQ5I2HRipcxsYLRjJqF_5cI8AK_lWnmnT913lH34Olmg3tb0XCQ-wWWgX2VgBhTJQMltK3zQ=="
 const url = process.env.INFLUXDB_URL;
 const org = process.env.INFLUXDB_ORG;
 const bucket = process.env.INFLUXDB_BUCKET;

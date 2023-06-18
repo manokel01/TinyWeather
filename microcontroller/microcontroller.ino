@@ -32,7 +32,7 @@
 #define NUMBER_OF_INPUTS 3
 #define NUMBER_OF_OUTPUTS 5
 #define TENSOR_ARENA_SIZE 4*1024
-#define UUID "8c21f098-87a9-4dca-bf38-93a14d7fa5bf" // the generated UUID for this device
+#define UUID "Arduino-Nano-Sense" // the generated UUID for this device
 #define LOCATION_X 35.377192 // dummy decimal coordinate
 #define LOCATION_Y 24.211324 // dummy decimal coordinate
 #define BATTERY 72 // dummy battery indication
@@ -107,7 +107,7 @@ void loop() {
   serializeJson(root, Serial);
   Serial.println();
 
-  delay(1000);
+  delay(10000);
 }
 
 String value(float out[5]) {

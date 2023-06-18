@@ -1,0 +1,190 @@
+#root {
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  /* background-color: #242424;
+  color: white; */
+  align-items: center;
+}
+
+
+/* --- header --- */
+
+.header-container {
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 90px;
+  padding: 20px;
+  /* justify-content: left; */
+  border: 2px solid #008CBA;
+  border-radius: 10px;
+  background-color: #008CBA;
+  width: 1270px;
+}
+
+.logo {
+  height: 100%;    
+  margin-right: 6px;
+}
+
+.header--title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-right: auto;
+  color: white;
+}
+
+.header--slogan {
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: 800;
+  color: white;
+  margin-top: 10px;
+}
+
+/* --- main --- */
+
+.main {
+  display: flex;
+  flex-direction: row;
+  min-width: 600px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+}
+
+.content {
+  width: 1000px;
+  border: 2px solid #008CBA;
+  border-radius: 10px;
+  margin-left: 20px;
+}
+
+.line {
+  border: 2px solid #008CBA;
+}
+
+/* --- sidebar --- */
+
+.sidebar {
+  border: 2px solid #008CBA;
+  border-radius: 10px;
+  width: auto;
+}
+
+.grower-list-title {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.grower-list {
+  width: 250px;
+}
+
+.list-item-sensor {
+  width: 180px;
+  background-color: #008CBA;
+  height: 60px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.section-title {
+  /* color:#008CBA; */
+  margin-left: 30px;
+  font-weight: 700;
+  color: #008CBA;
+}
+
+.list-group {
+  font-size: 1.1rem;
+}
+
+
+
+/* --- data --- */
+
+.data {
+  text-align: left;
+  padding-top: 20px;
+}
+
+.data-details {
+  height: 80px;
+  text-align: left;
+  margin: 20px 0 0 20px;
+  color: #292c33;
+}
+
+.data-details > li {
+  font-size: 1rem;;
+}
+
+.data-detail-text {
+  color: #008CBA;
+}
+
+.data-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  margin: 10px;
+  padding: 30px;
+}
+
+/*--- live data items --- */
+
+.data-item {
+    border: 3px solid #292c33;
+    border-radius: 10px;
+    height: 140px;
+    width: 140px;
+    text-align: center;
+    padding: 15px 10px;
+    font-size: 1.4rem;
+    background-color: #292c33;
+}
+
+.data-value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.temperature {
+  color:rgb(255, 0, 149);
+}  
+
+.humidity {
+    color:rgb(31, 179, 224);
+}
+
+.pressure {
+  color: rgb(39, 188, 49);
+}
+
+.weatherDesc {
+    color: white;
+}
+
+/*--- charts --- */
+
+.charts {
+  text-align: left;
+  color:#292c33;
+  padding: 10px 0 0 0;
+}
+
+.line-chart {
+  color: #292c33;
+}
+

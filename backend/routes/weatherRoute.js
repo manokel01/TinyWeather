@@ -1,5 +1,5 @@
 import express from 'express';
-import { getLatestWeather, getPastDayWeather }  from '../controllers/weatherController.js';
+import { getLatestWeather, getPastDayWeather, getAllWeatherData }  from '../controllers/weatherController.js';
 
 // Create a new router instance
 const router = express.Router()
@@ -26,7 +26,7 @@ const router = express.Router()
  *           description: The ObjectId of the device that generated the weather data.
  *           oneOf:
  *             - type: object
- *             - $ref: '#/components/schemas/Device'
+ *             - $ref: '#/components/schemas/Weather'
  *         location:
  *           type: array
  *           items:
@@ -50,13 +50,20 @@ const router = express.Router()
 
 /**
  * @swagger
- * /api/weather/latest:
+ * /api/weather/{sensorId}/latest:
  *   get:
- *     summary: Returns the lastest weather data.
+ *     summary: Returns the lastest weather data for a specific sensor.
  *     tags: [Weather]
+ *     parameters:
+ *       - in: path
+ *         name: sensorId
+ *         required: true
+ *         description: ID of the sensor to retrieve weather data for.
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Successfully retrieved latest weather.
+ *         description: Successfully retrieved latest weather for the specified sensor.
  *         content:
  *           application/json:
  *             schema:
@@ -76,14 +83,22 @@ const router = express.Router()
  *                   type: string
  *                   status: Error in retrieving latest weather data.
  */
-router.get('/latest', getLatestWeather);
+
+router.get('/:sensorId/latest', getLatestWeather);
 
 /**
  * @swagger
- * /api/weather/past/day:
+ * /api/weather/{sensorId}/past/day:
  *   get:
  *     summary: Returns the weather data of the last 24h.
  *     tags: [Weather]
+ *     parameters:
+ *       - in: path
+ *         name: sensorId
+ *         required: true
+ *         description: ID of the sensor to retrieve weather data for.
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: Successfully retrieved last 24h weather.
@@ -106,7 +121,44 @@ router.get('/latest', getLatestWeather);
  *                   type: string
  *                   status: Error in retrieving latest 24h weather data.
  */
-router.get('/past/day', getPastDayWeather);
+router.get('/:sensorId/past/day', getPastDayWeather);
+
+/**
+ * @swagger
+ * /api/weather/{sensorId}/all:
+ *   get:
+ *     summary: Returns all past weather data
+ *     tags: [Weather]
+ *     parameters:
+ *       - in: path
+ *         name: sensorId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the weather sensor
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved all weather data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                 $ref: '#/components/schemas/Weather'
+ *       400:
+ *         description: Invalid request or error in retrieving weather data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 data:
+ *                   type: string
+ *                   status: Error in retrieving weather data.
+ */
+router.get('/:sensorId/all', getAllWeatherData);
 
 // Export the router instance
 export { router };

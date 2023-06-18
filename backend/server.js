@@ -7,6 +7,7 @@ import { router as farmRouter } from './routes/farmRoute.js';
 import { router as growerRouter } from './routes/growerRoute.js';
 import { router as sensorRouter } from './routes/sensorRoute.js';
 import  { router as userRouter} from './routes/userRoute.js';
+import cors from 'cors';
 
 
 // -- UNCOMMENT THE LINES BELOW FOR SERIAL CONNECTION
@@ -23,6 +24,9 @@ const app = express();
 
 // Generate Swagger documentation
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
+// Enable CORS
+app.use(cors());
 
 // Parse request body
 app.use(express.json());

@@ -1,6 +1,7 @@
 import express from 'express';
 import { Router } from 'express';
-import { findAll, findOne, create, update, remove } from '../controllers/userController.js';
+import { findAll, findOne, create, update, remove, login, getMe } from '../controllers/userController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 const router = Router();
 
@@ -213,5 +214,61 @@ router.patch('/update/:username', update);
  *                   status: Error in deleting user.
  */
 router.delete('/delete/:username', remove);
+
+/**
+ * @swagger
+ * /api/users/login:
+ *   delete:
+ *     summary: User login.
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: User login.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Invalid request or error in deleting user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 data:
+ *                   type: string
+ *                   status: Error in User login.
+ */
+router.post('/login', login);
+
+/**
+ * @swagger
+ * /api/users/get/me:
+ *   delete:
+ *     summary: Get current logged-in user.
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Gets current logged-in user to send auth token to.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Invalid request or error in getting logged-in user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 data:
+ *                   type: string
+ *                   status: Error in getting logged-in user.
+ */
+router.get('/get/me', protect, getMe);
 
 export { router };

@@ -1,5 +1,6 @@
 import express from 'express';
-import { findAll, findOne, create, update, remove } from '../controllers/farmController.js';
+import { findAll, findOne, create, update, remove, getFarmsByGrowerUsername } from '../controllers/farmController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 // Create an instance of the Express router
 const router = express.Router();
@@ -228,5 +229,41 @@ router.patch('/update/:farm_code', update);
 
 // Route to delete a farm based on the farm's code
 router.delete('/delete/:farm_code', remove);
+
+/**
+ * @swagger
+ * /api/farms/grower/{username}/:
+ *   get:
+ *     summary: Get grower's farms.
+ *     description: Get a list of a grower's farms based on their username.
+ *     tags: [Farms, Growers]
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         description: The username of the grower to search farms for.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the grower's farms.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Farm'
+ *       400:
+ *         description: Invalid request or error in retrieving the grower's farms.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 data:
+ *                   type: string
+ *                   status: Error in retrieving the grower's farms.
+ */
+router.get('/grower/:username/', getFarmsByGrowerUsername);
 
 export { router };

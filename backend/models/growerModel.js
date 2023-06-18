@@ -37,6 +37,14 @@ const growerSchema = new Schema({
     required: false,
     max: 100
   },
+  username: {
+    type: String, 
+    required: [true, 'Username is a required field'], 
+    max: 100, 
+    unique: true,
+    trim: true,
+    lowercase: true
+  },
   email: {
     type: String, 
     required: [true, 'Email is a required field'], 
