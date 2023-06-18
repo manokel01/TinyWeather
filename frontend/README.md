@@ -9,6 +9,7 @@ TinyWeathr is a React web application that displays the weather data, machine le
 - Filter sensors by grower name or location
 - View detailed information about each sensor
 
+![frontend-image1](../static-files/tinyweather-front2.png)
 ## Technologies Used
 
 The TinyWeathr frontend was built using the following technologies:
